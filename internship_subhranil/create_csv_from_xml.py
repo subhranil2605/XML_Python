@@ -5,11 +5,6 @@ import codecs
 from pathlib import Path
 import concurrent.futures
 
-path = Path(os.path.join(os.getcwd(), "files/extracted_files"))
-target_path = Path(os.path.join(os.getcwd(), "files/extracted_csvs"))
-
-xml_files = (file for file in Path(path).iterdir() if file.suffix == '.xml')
-
 
 def get_tag_name(t: str):
     idx = t.rfind("}")
@@ -19,6 +14,13 @@ def get_tag_name(t: str):
 
 
 def creating_csv(xml_file):
+    path = Path(os.path.join(os.getcwd(), "files/extracted_files"))
+    target_path = Path(os.path.join(os.getcwd(), "files/extracted_csvs"))
+
+    if not target_path.is_dir():
+        os.mkdir(target_path)
+    
+    xml_files = (file for file in Path(path).iterdir() if file.suffix == '.xml')
     csv_filename = xml_file.name.replace(".xml", ".csv")
     target = os.path.join(target_path, csv_filename)
 
@@ -83,3 +85,7 @@ def creating_csv(xml_file):
 def convert(xml_files_):
     with concurrent.futures.ThreadPoolExecutor() as executor:
         executor.map(creating_csv, xml_files_)
+
+
+if __name__ == '__main__':
+    convert(xml_files)
