@@ -7,6 +7,9 @@ import logging
 logging.basicConfig(level=logging.DEBUG, format="[%(asctime)s] %(levelname)s: %(message)s")
 
 
+# logging.basicConfig(filename='test.log', level=logging.DEBUG, format="[%(asctime)s] %(levelname)s: %(message)s")
+
+
 def read_xml(filename: str) -> NodeList | None:
     """
     Read XML file from the disk
